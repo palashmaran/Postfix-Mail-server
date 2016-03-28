@@ -1,0 +1,40 @@
+For RedHat distributions 			
+
+Send only Mail configuration file using gmail Postfix
+
+yum install postfix mailx cyrus-sasl-plain
+
+echo "smtp.gmail.com    smtp_user:smtp_passwd" > /etc/postfix/sasl_passwd
+
+postmap hash:/etc/postfix/sasl_passwd
+
+sudo vim /etc/postfix/main.cf
+
+update all these configuration in a given file ,
+
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+# Secure channel TLS with exact nexthop name match.
+smtp_tls_security_level = secure
+smtp_tls_mandatory_protocols = TLSv1
+smtp_tls_mandatory_ciphers = high
+smtp_tls_secure_cert_match = nexthop
+smtp_tls_CAfile = /etc/pki/tls/certs/ca-bundle.crt
+relayhost = smtp.gmail.com:587
+
+for write changes in file
+
+:wq 
+
+for restart postfix server :
+
+service postfix restart
+
+if every thing works file , then remove 
+rm /etc/postfix/sasl_passwd
+
+for checking errors
+tail /var/log/maillog
+
+

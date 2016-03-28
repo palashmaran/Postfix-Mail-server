@@ -1,0 +1,46 @@
+
+For Debain distributions 			
+
+Send only Mail configuration file using gmail Postfix
+
+sudo apt-get install postfix
+
+echo "smtp.gmail.com    smtp_user:smtp_passwd" > /etc/postfix/sasl_passwd
+
+postmap hash:/etc/postfix/sasl_passwd
+
+sudo vim /etc/postfix/main.cf
+
+update all these configuration in a given file ,
+
+relayhost = [smtp.gmail.com]:587
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_CAfile = /etc/postfix/cacert.pem
+smtp_use_tls = yes
+
+	
+
+for write changes in file
+
+:wq 
+
+for restart postfix server :
+
+service postfix restart
+
+#Optional
+ 
+  if every thing works file , then remove 
+
+  rm /etc/postfix/sasl_passwd
+
+for checking errors
+
+tail /var/log/mail.log
+
+		
+
+
+	
