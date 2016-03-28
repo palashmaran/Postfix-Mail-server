@@ -13,3 +13,6 @@ Follow the instruction written in file
 
 Redhat_Centos_mailserver_configuration
 
+In case of error : Network unreachable
+
+set inet_protocols = ipv4
